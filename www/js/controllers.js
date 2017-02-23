@@ -10,6 +10,9 @@ angular.module('starter.controllers', [])
 	};
 
 	$scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+	$scope.ubicacion = new google.maps.LatLng(0, 0);
+
+	console.log($scope.ubicacion.lat());
 
 	var options = {timeout: 10000, enableHighAccuracy: false};
 
@@ -39,7 +42,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('registrarCrimenCtrl', function($scope, $state, $stateParams, $cordovaCamera, UserService, DataService) {
+.controller('registrarCrimenCtrl', function($scope, $state, $stateParams, $cordovaCamera, $ionicPopup, $timeout, UserService, DataService) {
 
 	$scope.formData = {};
 
@@ -67,19 +70,20 @@ angular.module('starter.controllers', [])
 
 
 	$scope.showAlert = function() {
-     var alertPopup = $ionicPopup.alert({
-       title: 'Don\'t eat that!',
-       template: 'It might taste good'
-     });
+	     var alertPopup = $ionicPopup.alert({
+	       title: 'Don\'t eat that!',
+	       template: 'It might taste good'
+	     });
 
-     alertPopup.then(function(res) {
-       console.log('Thank you for not eating my delicious ice cream cone');
-     });
-   };
+	     alertPopup.then(function(res) {
+	       console.log('Thank you for not eating my delicious ice cream cone');
+	     });
+   	};
 
 	$scope.registrar = function(){
+		
 		var user = UserService.getUser();
-		DataService.registerCrime(user.uid, formData.tipo, formData.descrip, formData.infoPol, formData.infoBomb, $scope.imageSrc).then(function (res) {
+		DataService.registerCrime(user.uid, $scope.formData.tipo, $scope.formData.descrip, $scope.formData.infoPol, $scope.formData.infoBomb, $scope.ubicacion.lat(), $scope.ubicacion.lgn()).then(function (res) {
 			$state.go('menu.inicio');
 		});
 

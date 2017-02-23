@@ -36,31 +36,34 @@ angular.module('starter.services', [])
 	}
 })
 
-.service('DataService', function ($firebaseAuth, $q) {
-	var auth = $firebaseAuth();
+.service('DataService', function ($firebaseObject, $firebaseArray, $q) {
+	var firebaseRef = firebase.database().ref();
 
 	return{
-		registerCrime: function (userId, crimeType, description, infoPolice, infoFirefighters) {
-			$defer = $q.defer();
+		registerCrime: function (userId, crimeType, description, infoPolice, infoFirefighters, lat, lng) {
+			$defer = $q.defer();			
 
 			firebaseRef.child('crimeList').child(userId).push({
 				name: name,
 				description: description,
 				infoPolice: infoPolice,
-				infoFirefighters: infoFirefighters
+				infoFirefighters: infoFirefighters,
+				lat: lat,
+				lng: lng
 			}).then(function (res) {
 				$defer.resolve(res);                
 			}).catch(function(error){
 				$defer.reject(error);  
 			});
 
+			
 
 			return $defer.promise;
 		},
 		getCrimeList: function (userId) {
-			$defer = $q.defer();            
+			$defer = $q.defer();
 
-			firebase.database().ref().child('crimeList').child(userId).once('value', function (snapshot) {
+			firebaseRef.child('crimeList').child(userId).once('value', function (snapshot) {
 				snapshot.val();
 			});
 
