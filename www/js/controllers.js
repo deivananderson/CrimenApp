@@ -31,8 +31,20 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('reportesCtrl', function($scope, $stateParams) {
+.controller('reportesCtrl', function($scope, $state, $stateParams, UserService, DataService) {
+  $scope.crimenes = [];
+  var user = UserService.getUser();
 
+  function loadCrimeList() {
+    DataService.getCrimeList(user.uid).then(function (res) {
+      console.log(res);
+      $scope.crimenes = res;
+    });
+  }
+
+  $scope.$on("$ionicView.enter", function (event, data) {
+    loadCrimeList();
+  });
 
 })
 
