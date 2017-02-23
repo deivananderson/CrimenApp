@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
 
-.controller('inicioCtrl', function($scope, $state, $stateParams, $cordovaGeolocation) {
+.controller('inicioCtrl', function($scope, $state, $stateParams, $cordovaGeolocation, Ubicacion) {
 
 	var mapOptions = {
 		center: new google.maps.LatLng(4.624335, -74.063644),
@@ -10,14 +10,12 @@ angular.module('starter.controllers', [])
 	};
 
 	$scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-	$scope.ubicacion = new google.maps.LatLng(4.624335, -74.063644);
-
-	console.log($scope.ubicacion.lat());
 
 	var options = {timeout: 10000, enableHighAccuracy: false};
 
   	$cordovaGeolocation.getCurrentPosition(options).then(function(position) {
 		$scope.ubicacion = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+		Ubicacion.setUbicacion($scope.ubicacion);
 		var marker = new google.maps.Marker({position:$scope.ubicacion,  map: $scope.map});
 		$scope.map.setCenter($scope.ubicacion);
 
@@ -42,7 +40,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('registrarCrimenCtrl', function($scope, $state, $stateParams, $cordovaCamera, $ionicPopup, $timeout, UserService, DataService) {
+.controller('registrarCrimenCtrl', function($scope, $state, $stateParams, $cordovaCamera, $ionicPopup, $timeout, UserService, DataService, Ubicacion) {
 
 	$scope.formData = {};
 
@@ -92,13 +90,13 @@ angular.module('starter.controllers', [])
 	$scope.registrar = function(){
     console.log("llegue registrar");
 		var user = UserService.getUser();
-		console.log($scope.formData.tipo);
 		if($scope.formData.tipo==null){
 		    console.log("sin informacion");
 		    $scope.showAlertFail();
 		}
 		else{
-		  DataService.registerCrime(user.uid, $scope.formData.tipo, $scope.formData.descrip, $scope.formData.infoPol, $scope.formData.infoBomb, $scope.ubicacion.lat(), $scope.ubicacion.lgn()).then(function (res) {
+			var ubicacion = Ubicacion.getUbicacion();
+		  	DataService.registerCrime(user.uid, $scope.formData.tipo, $scope.formData.descrip, $scope.formData.infoPol, $scope.formData.infoBomb, ubicacion.lat(), ubicacion.lng()).then(function (res) {
       			$state.go('menu.inicio');
       			$scope.showAlert();
       		});

@@ -4,6 +4,19 @@ angular.module('starter.services', [])
 
 }])
 
+.service('Ubicacion', function () {
+	var ubicacion = new google.maps.LatLng(4.624335, -74.063644);
+
+	return{
+		setUbicacion: function(ub){
+			ubicacion = ub;
+		},
+		getUbicacion: function(){
+			return ubicacion;
+		}
+	} 
+})
+
 .service('UserService', function ($firebaseAuth, $q) {
 	var auth = $firebaseAuth();
 
