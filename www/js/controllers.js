@@ -90,20 +90,18 @@ angular.module('starter.controllers', [])
    };
 
 	$scope.registrar = function(){
-
+    console.log("llegue registrar");
 		var user = UserService.getUser();
-		DataService.registerCrime(user.uid, $scope.formData.tipo, $scope.formData.descrip, $scope.formData.infoPol, $scope.formData.infoBomb, $scope.ubicacion.lat(), $scope.ubicacion.lgn()).then(function (res) {
-			$state.go('menu.inicio');
-			$scope.showAlert();
-		});
 		console.log($scope.formData.tipo);
 		if($scope.formData.tipo==null){
 		    console.log("sin informacion");
 		    $scope.showAlertFail();
 		}
 		else{
-		  $state.go('menu.inicio');
-      $scope.showAlert();
+		  DataService.registerCrime(user.uid, $scope.formData.tipo, $scope.formData.descrip, $scope.formData.infoPol, $scope.formData.infoBomb, $scope.ubicacion.lat(), $scope.ubicacion.lgn()).then(function (res) {
+      			$state.go('menu.inicio');
+      			$scope.showAlert();
+      		});
 		}
 
 	};

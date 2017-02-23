@@ -20,7 +20,7 @@
         <ion-toggle toggle-class="toggle-positive" id="registrarCrimen-toggle4" ng-model="formData.infoPol">Informar policia</ion-toggle>
         <ion-toggle toggle-class="toggle-positive" id="registrarCrimen-toggle5" ng-model="formData.infoBomb">Informar bomberos</ion-toggle>
         <button id="registrarCrimen-button10" class="button button-balanced  button-block icon-left ion-android-camera" ng-click="takePhoto()">Tomar Foto</button>
-        <button id="registrarCrimen-button9" type="submit" class="button button-positive  button-block icon-left ion-android-send">REGISTRAR</button>
+        <button id="registrarCrimen-button9" type="submit" class="button button-positive  button-block icon-left ion-android-send" ng-click="registrar()">REGISTRAR</button>
         <div class="contentImg"><img id="picture" ng-src="{{imageSrc}}"></div>
       </form>
     </div>
