@@ -10,7 +10,7 @@ angular.module('starter.controllers', [])
 	};
 
 	$scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-	$scope.ubicacion = new google.maps.LatLng(0, 0);
+	$scope.ubicacion = new google.maps.LatLng(4.624335, -74.063644);
 
 	console.log($scope.ubicacion.lat());
 
