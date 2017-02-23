@@ -1,9 +1,6 @@
 angular.module('starter.controllers', [])
 
 
-.controller('inicioCtrl', function($scope, $stateParams, $cordovaGeolocation) {
-
-
 .controller('inicioCtrl', function($scope, $state, $stateParams, $cordovaGeolocation) {
 
 	var mapOptions = {
@@ -41,11 +38,6 @@ angular.module('starter.controllers', [])
 .controller('camaraCtrl', function($scope, $stateParams) {
 
 })
-
-
-.controller('registrarCrimenCtrl', function($scope, $stateParams, $cordovaCamera, UserService, DataService,$ionicPopup, $timeout) {
-	$scope.formData={};
-
 
 .controller('registrarCrimenCtrl', function($scope, $state, $stateParams, $cordovaCamera, UserService, DataService) {
 
@@ -101,10 +93,6 @@ angular.module('starter.controllers', [])
 
 })
 
-
-.controller('loginCtrl', function($scope, $stateParams, UserService) {
-
-
 .controller('loginCtrl', function($scope, $state, $stateParams, UserService) {
 
 	$scope.loginData = {};
@@ -136,9 +124,6 @@ angular.module('starter.controllers', [])
 
 
 })
-
-
-.controller('registrarseCtrl', function($scope, $stateParams) {
 
 
 .controller('registrarseCtrl', function($scope, $state, $stateParams, UserService) {

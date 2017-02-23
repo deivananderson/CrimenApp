@@ -54,13 +54,6 @@ angular.module('starter.services', [])
 				$defer.reject(error);  
 			});
 
-			geoFire = new GeoFire(FirebaseDatabase.getInstance().getReference().child("items_location");
-			geoQuery = geoFire.queryAtLocation(geoLocation), radius);
-			geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
-			    public void onKeyEntered(String key, GeoLocation location) {
-			         //retrieve data
-			    }
-			};
 
 			return $defer.promise;
 		},
