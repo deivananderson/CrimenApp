@@ -147,18 +147,42 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('registrarseCtrl', function($scope, $state, $stateParams, UserService) {
+.controller('registrarseCtrl', function($scope, $state, $stateParams, UserService, $ionicPopup, $timeout) {
 
 	$scope.registerData = {};
   $scope.user={};
 
+  $scope.showAlertRegistro = function() {
+       var alertPopup = $ionicPopup.alert({
+         title: 'REGISTRO EXITOSO:',
+       });
+
+       alertPopup.then(function(res) {
+         console.log('Registro exitoso');
+       });
+     };
+
+  $scope.showAlertRegistroFail = function(data) {
+         var alertPopup = $ionicPopup.alert({
+           title: 'ERROR REGISTRO:',
+           template: 'Ya existe una cuenta con este email'
+         });
+
+         alertPopup.then(function(res) {
+           console.log('Registro exitoso');
+         });
+       };
+
 	$scope.doRegister = function() {
 		  UserService.registerUser($scope.registerData.username, $scope.registerData.password).then(function(){
 	    $scope.user.titulo=$scope.registerData.username;
+	    console.log("registrado");
 			$state.go('menu.inicio');
+			$scope.showAlertRegistro();
 		}
 		).catch(function(error){
 			console.log(error);
+			$scope.showAlertRegistroFail(error);
 		});
 	};
 })

@@ -7,8 +7,8 @@ angular.module('app.routes', [])
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
-    
-  
+
+
 
   .state('menu.inicio', {
     url: '/inicio',
@@ -69,7 +69,7 @@ angular.module('app.routes', [])
   .state('login', {
     url: '/login',
     templateUrl: 'templates/login.html',
-    controller: 'loginCtrl'    
+    controller: 'loginCtrl'
   })
 
   .state('recuperarContraseA', {
@@ -78,7 +78,7 @@ angular.module('app.routes', [])
     controller: 'recuperarContraseACtrl'
   })
 
-  .state('menu.confirmaciNEnvio', {
+  .state('confirmaciNEnvio', {
     url: '/confirmacionEnvio',
     views: {
       'side-menu21': {
@@ -116,6 +116,6 @@ angular.module('app.routes', [])
 
 $urlRouterProvider.otherwise('/login')
 
-  
+
 
 });
