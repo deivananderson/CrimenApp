@@ -56,8 +56,9 @@ angular.module('starter.services', [])
 		registerCrime: function (userId, crimeType, description, infoPolice, infoFirefighters, image, lat, lng) {
 			$defer = $q.defer();			
 
-			firebaseRef.child('crimeList').child(userId).push({
-				name: name,
+			firebaseRef.child('crimeList').push({
+				name: crimeType,
+				userId: userId,
 				description: description,
 				infoPolice: infoPolice,
 				infoFirefighters: infoFirefighters,
@@ -76,9 +77,13 @@ angular.module('starter.services', [])
 		},
 		getCrimeList: function (userId) {
 			$defer = $q.defer();
-
-			firebaseRef.child('crimeList').child(userId).once('value', function (snapshot) {
-				snapshot.val();
+			$crimenes = [];
+			
+          	var crimeList = $firebaseArray(firebaseRef.child('crimeList'));
+			crimeList.$loaded().then(function (list) {
+				$defer.resolve(list);
+			}).catch(function (err) {
+				$defer.reject(err);
 			});
 
 			return $defer.promise;

@@ -2,30 +2,11 @@
   <ion-content padding="true" class="has-header">
     <h3 id="incidentes-heading14" style="color:#DA1414;font-weight:600;text-align:center;">Ultimos Incidentes</h3>
     <div id="incidentes-container12">
-      <ion-list id="incidentes-list4">
-        <ion-item class="item-avatar positive" id="incidentes-list-item42">
-          <img src="img/IEBC7qtT027I04FUWHcd_Satria.jpg">
-          <h2positive>Pedro Picapiedras
-            <p>Atracadores por la calle 100, tener cuidado</p>
-          </h2positive>
-        </ion-item>
-        <ion-item class="item-avatar positive" id="incidentes-list-item43">
-          <img src="img/h9Giz57rRqeTiuq4weaf_person-flat.png">
-          <h2positive>Carlos Melo
-            <p>Presuntos o sospechosos en la calle</p>
-          </h2positive>
-        </ion-item>
-        <ion-item class="item-avatar positive" id="incidentes-list-item44">
-          <img src="img/8eHiHBT1QaSgpIAw9dn9_person-girl-flat.png">
-          <h2positive>Maria Camila
-            <p>Robando celulares por la castellanana</p>
-          </h2positive>
-        </ion-item>
-        <ion-item class="item-avatar positive" id="incidentes-list-item47">
-          <img src="img/sGuBiZ9qSfC7rUbU2rj1_administrator.png">
-          <h2positive>Deivan Oliva
-            <p>Peligro en puente peatonal de la ca</p>
-          </h2positive>
+      <ion-list>
+       <ion-item class="item-avatar positive" ng-repeat="crimen in crimenes">
+          <img ng-src="{{crimen.imageReport}}">
+          <h2>{{crimen.name}}</h2>
+          <p>{{crimen.description}}</p>
         </ion-item>
       </ion-list>
     </div>
