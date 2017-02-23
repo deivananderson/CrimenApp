@@ -5,7 +5,7 @@
       <form id="registrarCrimen-form6" class="list">
         <label class="item item-select" id="registrarCrimen-select2">
           <span class="input-label">Crimen</span>
-          <select ng-model="formData.tipo">
+          <select ng-model="formData.tipo" required>
             <option>Robo</option>
             <option>Fleteo</option>
             <option>Riña</option>
@@ -15,12 +15,12 @@
         </label>
         <label class="item item-input" id="registrarCrimen-textarea3">
           <span class="input-label">Descripción</span>
-          <textarea placeholder="Descripcion (opcional)" ng-model="formData.descrip"></textarea>
+          <textarea placeholder="Descripcion (opcional)" ng-model="formData.descrip" required></textarea>
         </label>
         <ion-toggle toggle-class="toggle-positive" id="registrarCrimen-toggle4" ng-model="formData.infoPol">Informar policia</ion-toggle>
         <ion-toggle toggle-class="toggle-positive" id="registrarCrimen-toggle5" ng-model="formData.infoBomb">Informar bomberos</ion-toggle>
         <button id="registrarCrimen-button10" class="button button-balanced  button-block icon-left ion-android-camera" ng-click="takePhoto()">Tomar Foto</button>
-        <button id="registrarCrimen-button9" type="submit" class="button button-positive  button-block icon-left ion-android-send" ng-click="showAlert()">REGISTRAR</button>
+        <button id="registrarCrimen-button9" type="submit" class="button button-positive  button-block icon-left ion-android-send" ng-click="registrar()">REGISTRAR</button>
         <div class="contentImg"><img id="picture" ng-src="{{imageSrc}}"></div>
       </form>
     </div>

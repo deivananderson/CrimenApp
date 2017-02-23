@@ -39,7 +39,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('registrarCrimenCtrl', function($scope, $state, $stateParams, $cordovaCamera, UserService, DataService) {
+.controller('registrarCrimenCtrl', function($scope, $state, $stateParams, $cordovaCamera, UserService, DataService,$ionicPopup, $timeout) {
 
 	$scope.formData = {};
 
@@ -65,23 +65,42 @@ angular.module('starter.controllers', [])
 		});
 	};
 
-
 	$scope.showAlert = function() {
      var alertPopup = $ionicPopup.alert({
-       title: 'Don\'t eat that!',
-       template: 'It might taste good'
+       title: 'REGISTRO EXITOSO DE:',
+       template: $scope.formData.tipo
      });
 
      alertPopup.then(function(res) {
-       console.log('Thank you for not eating my delicious ice cream cone');
+       console.log('Registro exitoso');
      });
+   };
+
+   $scope.showAlertFail = function() {
+        var alertPopup = $ionicPopup.alert({
+          title: 'Ingrese un crimen',
+        });
+
+        alertPopup.then(function(res) {
+          console.log('fail crimen');
+        });
    };
 
 	$scope.registrar = function(){
 		var user = UserService.getUser();
-		DataService.registerCrime(user.uid, formData.tipo, formData.descrip, formData.infoPol, formData.infoBomb, $scope.imageSrc).then(function (res) {
+		DataService.registerCrime(user.uid, $scope.formData.tipo, $scope.formData.descrip, $scope.formData.infoPol, $scope.formData.infoBomb, $scope.imageSrc).then(function (res) {
 			$state.go('menu.inicio');
+			$scope.showAlert();
 		});
+		console.log($scope.formData.tipo);
+		if($scope.formData.tipo==null){
+		    console.log("sin informacion");
+		    $scope.showAlertFail();
+		}
+		else{
+		  $state.go('menu.inicio');
+      $scope.showAlert();
+		}
 
 	};
 
@@ -129,9 +148,11 @@ angular.module('starter.controllers', [])
 .controller('registrarseCtrl', function($scope, $state, $stateParams, UserService) {
 
 	$scope.registerData = {};
+  $scope.user={};
 
 	$scope.doRegister = function() {
-		UserService.registerUser($scope.registerData.username, $scope.registerData.password).then(function(){
+		  UserService.registerUser($scope.registerData.username, $scope.registerData.password).then(function(){
+	    $scope.user.titulo=$scope.registerData.username;
 			$state.go('menu.inicio');
 		}
 		).catch(function(error){
