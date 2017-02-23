@@ -1,5 +1,5 @@
 angular.module('starter.controllers', [])
-  
+
 .controller('inicioCtrl', function($scope, $stateParams, $cordovaGeolocation) {
 	var mapOptions = {
 		center: new google.maps.LatLng(4.624335, -74.063644),
@@ -22,22 +22,23 @@ angular.module('starter.controllers', [])
 
 
 })
-   
+
 .controller('incidentesCtrl', function($scope, $stateParams) {
 
 
 })
-   
+
 .controller('reportesCtrl', function($scope, $stateParams) {
 
 
 })
-   
+
 .controller('camaraCtrl', function($scope, $stateParams) {
-	
+
 })
-   
-.controller('registrarCrimenCtrl', function($scope, $stateParams, $cordovaCamera, UserService, DataService) {
+
+.controller('registrarCrimenCtrl', function($scope, $stateParams, $cordovaCamera, UserService, DataService,$ionicPopup, $timeout) {
+	$scope.formData={};
 	$scope.takePhoto = function(){
 		var options = {
 			quality: 50,
@@ -59,20 +60,33 @@ angular.module('starter.controllers', [])
 		});
 	};
 
-	$scope.registrar = function(formData){
+	$scope.showAlert = function() {
+     var alertPopup = $ionicPopup.alert({
+       title: 'Don\'t eat that!',
+       template: 'It might taste good'
+     });
+
+     alertPopup.then(function(res) {
+       console.log('Thank you for not eating my delicious ice cream cone');
+     });
+   };
+
+	$scope.registrar = function(){
 		var user = UserService.getUser();
 		DataService.registerCrime(user.uid, formData.tipo, formData.descrip, formData.infoPol, formData.infoBomb, $scope.imageSrc).then(function (res) {
 			$state.go('menu.inicio');
 		});
 
-	}
+	};
+
+
 })
-   
+
 .controller('menuCtrl', function($scope, $stateParams) {
 
 
 })
-   
+
 .controller('loginCtrl', function($scope, $stateParams, UserService) {
 	$scope.loginData = {};
 
@@ -81,27 +95,27 @@ angular.module('starter.controllers', [])
 	        $state.go('menu.inicio');
 	      }
 	    ).catch(function(error){
-	      console.log(error);    
+	      console.log(error);
 	    });
 	}
 
 })
-   
+
 .controller('recuperarContraseACtrl', function($scope, $stateParams) {
 
 
 })
-   
+
 .controller('confirmaciNEnvioCtrl', function($scope, $stateParams) {
 
 
 })
-   
+
 .controller('confirmaciNRegistroCtrl', function($scope, $stateParams) {
 
 
 })
-   
+
 .controller('registrarseCtrl', function($scope, $stateParams) {
 	$scope.registerData = {};
 
@@ -115,9 +129,8 @@ angular.module('starter.controllers', [])
 		});
 	};
 })
-   
+
 .controller('configuraciNCtrl', function($scope, $stateParams) {
 
 
 });
- 
