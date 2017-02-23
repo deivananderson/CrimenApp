@@ -1,0 +1,28 @@
+<ion-view title="Registrar Crimen" id="page6" style="background-color:#FFFFFF;">
+  <ion-content padding="true" class="has-header">
+    <h4 id="registrarCrimen-heading6" style="color:#2B66CF;font-weight:400;">Seleccione categoria</h4>
+    <div id="registrarCrimen-container14">
+      <form id="registrarCrimen-form6" class="list">
+        <label class="item item-select" id="registrarCrimen-select2">
+          <span class="input-label">Crimen</span>
+          <select ng-model="formData.tipo">
+            <option>Robo</option>
+            <option>Fleteo</option>
+            <option>Riña</option>
+            <option>Trafico estupefacientes</option>
+            <option>Asesinato</option>
+          </select>
+        </label>
+        <label class="item item-input" id="registrarCrimen-textarea3">
+          <span class="input-label">Descripción</span>
+          <textarea placeholder="Descripcion (opcional)" ng-model="formData.descrip"></textarea>
+        </label>
+        <ion-toggle toggle-class="toggle-positive" id="registrarCrimen-toggle4" ng-model="formData.infoPol">Informar policia</ion-toggle>
+        <ion-toggle toggle-class="toggle-positive" id="registrarCrimen-toggle5" ng-model="formData.infoBomb">Informar bomberos</ion-toggle>
+        <button id="registrarCrimen-button10" class="button button-balanced  button-block icon-left ion-android-camera" ng-click="takePhoto()">Tomar Foto</button>
+        <button id="registrarCrimen-button9" type="submit" class="button button-positive  button-block icon-left ion-android-send" ng-click="registrar()">REGISTRAR</button>
+        <div class="contentImg"><img id="picture" ng-src="{{imageSrc}}"></div>
+      </form>
+    </div>
+  </ion-content>
+</ion-view>

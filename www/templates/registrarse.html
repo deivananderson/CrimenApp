@@ -1,0 +1,18 @@
+<ion-view title="Registrarse" id="page5">
+  <ion-content padding="true" class="has-header">
+    <form id="registrarse-form2" class="list" ng-submit="doRegister()">
+      <h1 id="registrarse-heading4" style="color:#4DB832;text-align:center;">CrimenApp</h1>
+      <h5 id="registrarse-heading5" style="color:#2B66CF;font-weight:400;">Ingresa los siguientes datos:</h5>
+      <ion-list id="registrarse-list3">
+        <label class="item item-input" id="registrarse-input10" name="usuario" >
+          <input type="email" placeholder="Correo Electronico" ng-model="registerData.username">
+        </label>
+        <label class="item item-input" id="registrarse-input5" name="contraseña">
+          <input type="password" placeholder="Contraseña" ng-model="registerData.username">
+        </label>
+      </ion-list>
+      <button ui-sref="menu.confirmaciNRegistro" id="registrarse-button3" style="font-weight:600;" class="button button-balanced  button-block icon-right ion-log-in">Registrarse</button>
+    </form>
+    <a ui-sref="menu.login" id="registrarse-button4" class="button button-positive  button-block icon-left ion-android-arrow-back">Regresar</a>
+  </ion-content>
+</ion-view>
