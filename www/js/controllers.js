@@ -27,6 +27,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('incidentesCtrl', function($scope, $stateParams) {
+.controller('incidentesCtrl', function($scope, $stateParams, UserService, DataService) {
 
 
 })
