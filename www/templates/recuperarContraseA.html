@@ -7,9 +7,9 @@
       <div id="recuperarContraseA-container7">
         <form id="recuperarContraseA-form9" class="list">
           <label class="item item-input" id="recuperarContraseA-input7" name="Correo">
-            <input type="text" placeholder="Correo">
+            <input type="text" placeholder="Correo" required ng-model="correoRecuperacion.correo">
           </label>
-          <a ui-sref="menu.confirmaciNEnvio" id="recuperarContraseA-button11" style="font-weight:600;color:#FBFBFB;" class="button button-balanced  button-block icon-right ion-log-in">Enviar</a>
+          <a id="recuperarContraseA-button11" style="font-weight:600;color:#FBFBFB;" ng-click="recuperar()" class="button button-balanced  button-block icon-right ion-log-in">Enviar</a>
         </form>
       </div>
     </form>
