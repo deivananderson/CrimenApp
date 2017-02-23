@@ -142,9 +142,39 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('recuperarContraseACtrl', function($scope, $stateParams) {
+.controller('recuperarContraseACtrl', function($scope, $state, $stateParams,$ionicPopup) {
+    $scope.correoRecuperacion = {};
 
+    $scope.recuperar=function(){
+        if($scope.correoRecuperacion.correo == null ){
+            $scope.showAlertRecuperacionFail();
+        }
+        else{
+            $state.go('login');
+            $scope.showAlertRecuperacion();
+        }
+    };
 
+    $scope.showAlertRecuperacion = function() {
+           var alertPopup = $ionicPopup.alert({
+             title: 'RECUPERACIÓN:',
+             template: $scope.correoRecuperacion.correo
+           });
+
+           alertPopup.then(function(res) {
+             console.log('Registro exitoso');
+           });
+         };
+
+    $scope.showAlertRecuperacionFail = function() {
+               var alertPopup = $ionicPopup.alert({
+                 title: 'Ingrese un correo:',
+               });
+
+               alertPopup.then(function(res) {
+                 console.log('Registro exitoso');
+               });
+             };
 })
 
 .controller('confirmaciNEnvioCtrl', function($scope, $stateParams) {
