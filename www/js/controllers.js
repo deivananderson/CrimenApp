@@ -43,6 +43,7 @@ angular.module('starter.controllers', [])
 .controller('registrarCrimenCtrl', function($scope, $state, $stateParams, $cordovaCamera, $ionicPopup, $timeout, UserService, DataService, Ubicacion) {
 
 	$scope.formData = {};
+	$scope.imageSrc="";
 
 
 	$scope.takePhoto = function(){
@@ -96,7 +97,7 @@ angular.module('starter.controllers', [])
 		}
 		else{
 			var ubicacion = Ubicacion.getUbicacion();
-		  	DataService.registerCrime(user.uid, $scope.formData.tipo, $scope.formData.descrip, $scope.formData.infoPol, $scope.formData.infoBomb, ubicacion.lat(), ubicacion.lng()).then(function (res) {
+		  	DataService.registerCrime(user.uid, $scope.formData.tipo, $scope.formData.descrip, $scope.formData.infoPol, $scope.formData.infoBomb, $scope.imageSrc, ubicacion.lat(), ubicacion.lng()).then(function (res) {
       			$state.go('menu.inicio');
       			$scope.showAlert();
       		});

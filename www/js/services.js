@@ -53,7 +53,7 @@ angular.module('starter.services', [])
 	var firebaseRef = firebase.database().ref();
 
 	return{
-		registerCrime: function (userId, crimeType, description, infoPolice, infoFirefighters, lat, lng) {
+		registerCrime: function (userId, crimeType, description, infoPolice, infoFirefighters, image, lat, lng) {
 			$defer = $q.defer();			
 
 			firebaseRef.child('crimeList').child(userId).push({
@@ -61,6 +61,7 @@ angular.module('starter.services', [])
 				description: description,
 				infoPolice: infoPolice,
 				infoFirefighters: infoFirefighters,
+				imageReport: image,
 				lat: lat,
 				lng: lng
 			}).then(function (res) {
