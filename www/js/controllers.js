@@ -26,15 +26,21 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('incidentesCtrl', function($scope, $stateParams) {
 .controller('incidentesCtrl', function($scope, $stateParams, UserService, DataService) {
+	$scope.crimenes = [];
 
+	$scope.$on("$ionicView.enter", function (event, data) {
+	 	DataService.getCrimeList().then(function (res) {
+			console.log(res);
+			$scope.crimenes = res;
+		});
+	});
 
 })
 
-.controller('reportesCtrl', function($scope, $stateParams) {
+.controller('reportesCtrl', function($scope, $state, $stateParams, UserService, DataService) {
 
-
+  
 })
 
 .controller('camaraCtrl', function($scope, $stateParams) {
@@ -89,8 +95,7 @@ angular.module('starter.controllers', [])
         });
    };
 
-	$scope.registrar = function(){
-    console.log("llegue registrar");
+	$scope.registrar = function(){    
 		var user = UserService.getUser();
 		if($scope.formData.tipo==null){
 		    console.log("sin informacion");
@@ -150,14 +155,13 @@ angular.module('starter.controllers', [])
 .controller('registrarseCtrl', function($scope, $state, $stateParams, UserService) {
 
 	$scope.registerData = {};
-  $scope.user={};
+  	$scope.user={};
 
 	$scope.doRegister = function() {
-		  UserService.registerUser($scope.registerData.username, $scope.registerData.password).then(function(){
-	    $scope.user.titulo=$scope.registerData.username;
+	  	UserService.registerUser($scope.registerData.username, $scope.registerData.password).then(function(){
+		    $scope.user.titulo=$scope.registerData.username;
 			$state.go('menu.inicio');
-		}
-		).catch(function(error){
+		}).catch(function(error){
 			console.log(error);
 		});
 	};
