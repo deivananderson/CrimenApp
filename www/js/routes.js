@@ -72,14 +72,10 @@ angular.module('app.routes', [])
     controller: 'loginCtrl'    
   })
 
-  .state('menu.recuperarContraseA', {
+  .state('recuperarContraseA', {
     url: '/recuperarContraseña',
-    views: {
-      'side-menu21': {
-        templateUrl: 'templates/recuperarContraseA.html',
-        controller: 'recuperarContraseACtrl'
-      }
-    }
+    templateUrl: 'templates/recuperarContraseA.html',
+    controller: 'recuperarContraseACtrl'
   })
 
   .state('menu.confirmaciNEnvio', {

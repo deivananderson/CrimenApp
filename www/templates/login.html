@@ -1,6 +1,5 @@
 <ion-view title="Login" id="page4" style="background-color:#FFFFFF;">
-  <ion-content padding="true" class="has-header">
-    <form id="login-form1" class="list">
+  <ion-content padding="true" class="has-header">      
       <div id="login-container2">
         <h1 id="login-heading2" style="color:#4DB832;text-align:center;">CrimenApp</h1>
       </div>
@@ -10,13 +9,12 @@
             <input type="text" placeholder="Usuario" ng-model="loginData.username">
           </label>
           <label class="item item-input" id="login-input12" name="contraseña">
-            <input type="text" placeholder="Contraseña" ng-model="formData.password">
+            <input type="password" placeholder="Contraseña" ng-model="loginData.password">
           </label>
           <button id="login-button1" style="font-weight:600;color:#FBFBFB;" class="button button-balanced  button-block icon-right ion-log-in" type="submit">Ingresar</button>
-          <a ui-sref="menu.registrarse" id="login-button6" style="font-weight:600;color:#FBFBFB;" class="button button-positive  button-block icon-right ion-ios-plus-outline">Crear una cuenta</a>
+          <a ui-sref="registrarse" id="login-button6" style="font-weight:600;color:#FBFBFB;" class="button button-positive  button-block icon-right ion-ios-plus-outline">Crear una cuenta</a>
         </form>
-      </div>
-    </form>
-    <a ui-sref="menu.recuperarContraseA" id="login-button5" style="color:#2B66CF;" class="button button-balanced  button-block button-clear">¿Olvidaste la contraseña?</a>
+      </div>    
+    <a ui-sref="recuperarContraseA" id="login-button5" style="color:#2B66CF;" class="button button-balanced  button-block button-clear">¿Olvidaste la contraseña?</a>
   </ion-content>
 </ion-view>
