@@ -66,14 +66,10 @@ angular.module('app.routes', [])
     controller: 'menuCtrl'
   })
 
-  .state('menu.login', {
+  .state('login', {
     url: '/login',
-    views: {
-      'side-menu21': {
-        templateUrl: 'templates/login.html',
-        controller: 'loginCtrl'
-      }
-    }
+    templateUrl: 'templates/login.html',
+    controller: 'loginCtrl'    
   })
 
   .state('menu.recuperarContraseA', {
@@ -106,14 +102,10 @@ angular.module('app.routes', [])
     }
   })
 
-  .state('menu.registrarse', {
+  .state('registrarse', {
     url: '/registro',
-    views: {
-      'side-menu21': {
-        templateUrl: 'templates/registrarse.html',
-        controller: 'registrarseCtrl'
-      }
-    }
+    templateUrl: 'templates/registrarse.html',
+    controller: 'registrarseCtrl'
   })
 
   .state('menu.configuraciN', {
@@ -126,7 +118,7 @@ angular.module('app.routes', [])
     }
   })
 
-$urlRouterProvider.otherwise('/side-menu21/login')
+$urlRouterProvider.otherwise('/login')
 
   
 

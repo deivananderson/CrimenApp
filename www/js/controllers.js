@@ -12,8 +12,9 @@ angular.module('starter.controllers', [])
 	var options = {timeout: 10000, enableHighAccuracy: false};
 
   	$cordovaGeolocation.getCurrentPosition(options).then(function(position) {
-		var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+		$scope.ubicacion = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 		var marker = new google.maps.Marker({position:latLng,  map: $scope.map});
+		$scope.map.setCenter($scope.ubicacion);
 
 	}, function (error) {
 		console.log('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
