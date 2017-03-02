@@ -1,6 +1,5 @@
 angular.module('starter.controllers', [])
 
-
 .controller('inicioCtrl', function($scope, $state, $stateParams, $cordovaGeolocation, Ubicacion) {
 
 	var mapOptions = {
@@ -13,7 +12,7 @@ angular.module('starter.controllers', [])
 
 	var options = {timeout: 10000, enableHighAccuracy: false};
 
-  	$cordovaGeolocation.getCurrentPosition(options).then(function(position) {
+	$cordovaGeolocation.getCurrentPosition(options).then(function(position) {
 		$scope.ubicacion = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 		Ubicacion.setUbicacion($scope.ubicacion);
 		var marker = new google.maps.Marker({position:$scope.ubicacion,  map: $scope.map});
@@ -26,37 +25,62 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('incidentesCtrl', function($scope, $state,$stateParams, UserService, DataService) {
+.controller('incidentesCtrl', function($scope, Global, $state, $stateParams, $ionicLoading, UserService, DataService  ) {
 	$scope.crimenes = [];
 
+  $scope.show = function() {
+    $ionicLoading.show({
+      template: 'Loading...',
+      duration: 3000
+    }).then(function(){
+       console.log("The loading indicator is now displayed");
+    });
+  };
+
+  $scope.hide = function(){
+    $ionicLoading.hide().then(function(){
+       console.log("The loading indicator is now hidden");
+    });
+  };
+
+  $scope.show();
 	$scope.$on("$ionicView.enter", function (event, data) {
 	 	DataService.getCrimeList().then(function (res) {
 			$scope.crimenes = res;
+      $scope.hide();
 		});
 	});
 
-  $scope.masDetaller = function(data){
-      console.log(data);
-      $state.go('menu.reportes');
-      $scope.poslat=data.lat;
-      $scope.poslng=data.lng;
+  $scope.masDetalle = function(data){
+    Global.getData().reporteDet = data;
+    $state.go('menu.reportes');      
   };
 
-  var mapOptions = {
-      center: new google.maps.LatLng(4.624335, -74.063644),
-        zoom: 15,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-  var poslat=4.624335;
-  var poslng=-74.063644;
-  $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-  $scope.ubicacion = new google.maps.LatLng(poslat, poslng);
-  var marker = new google.maps.Marker({position:$scope.ubicacion,  map: $scope.map});
-  $scope.map.setCenter($scope.ubicacion);
+  
 })
 
-.controller('reportesCtrl', function($scope, $state, $stateParams, UserService, DataService) {
+.controller('reportesCtrl', function($scope, Global, $state, $stateParams, UserService, DataService) {
+  var mapOptions = {
+    center: new google.maps.LatLng(4.624335, -74.063644),
+    zoom: 15,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };    
 
+  $scope.map = new google.maps.Map(document.getElementById("mapIncidents"), mapOptions);
+  
+
+  var poslat = 4.624335;
+  var poslng = -74.063644;
+
+  if (Global.getData().reporteDet){
+    poslat = Global.getData().reporteDet.lat;
+    poslng = Global.getData().reporteDet.lng;
+  }
+
+  $scope.ubicacion = new google.maps.LatLng(poslat, poslng);
+
+  var marker = new google.maps.Marker({position:$scope.ubicacion,  map: $scope.map});
+  $scope.map.setCenter($scope.ubicacion);
 
 })
 
@@ -150,37 +174,56 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('loginCtrl', function($scope, $state, $stateParams, UserService,$ionicPopup, $timeout) {
+.controller('loginCtrl', function($scope, $state, $stateParams, $ionicLoading, UserService,$ionicPopup, $timeout) {
 	$scope.loginData = {};
-   $scope.showLoginFail = function() {
-        var alertPopup = $ionicPopup.alert({
-          title: 'Ingrese correo y contraseña'
-        });
-        alertPopup.then(function(res) {
-          console.log('fail crimen');
-        });
+  $scope.show = function() {
+    $ionicLoading.show({
+      template: 'Loading...',
+      duration: 3000
+    }).then(function(){
+       console.log("The loading indicator is now displayed");
+    });
+  };
+
+  $scope.hide = function(){
+    $ionicLoading.hide().then(function(){
+       console.log("The loading indicator is now hidden");
+    });
+  };
+
+  $scope.showLoginFail = function() {
+    $scope.hide();
+    var alertPopup = $ionicPopup.alert({
+      title: 'Ingrese correo y contraseña'
+    });
+    alertPopup.then(function(res) {
+      console.log('fail crimen');
+    });
    };
 
   $scope.showLoginFailError = function(data) {
-          var alertPopup = $ionicPopup.alert({
-            title: 'Error',
-            template: data
-          });
-          alertPopup.then(function(res) {
-            console.log('fail crimen');
-          });
+    $scope.hide();
+    var alertPopup = $ionicPopup.alert({
+      title: 'Error',
+      template: data
+    });
+    alertPopup.then(function(res) {
+      console.log('fail crimen');
+    });
   };
 
 	$scope.doLogin = function() {
-
-	  if($scope.loginData.username == null || $scope.loginData.password == null){$scope.showLoginFail();}
+    $scope.show();
+	  if($scope.loginData.username == null || $scope.loginData.password == null){
+      $scope.showLoginFail();
+    }
     else{
       UserService.login($scope.loginData.username, $scope.loginData.password).then(function(){
-      				console.log("Menu inicio");
-              $state.go('menu.inicio');
+        $scope.hide();
+        $state.go('menu.inicio');
       }).catch(function(error){
-              $scope.showLoginFailError(error);
-      	      console.log(error);
+        $scope.showLoginFailError(error);
+	      console.log(error);
       });
     }
 	}

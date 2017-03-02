@@ -35,7 +35,7 @@ angular.module('app.routes', [])
     views: {
       'side-menu21': {
         templateUrl: 'templates/reportes.html',
-        controller: 'incidentesCtrl'
+        controller: 'reportesCtrl'
       }
     }
   })

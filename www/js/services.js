@@ -1,7 +1,11 @@
 angular.module('starter.services', [])
 
-.factory('BlankFactory', [function(){
-
+.factory('Global', ['$rootScope', function($rootScope){
+	return{
+		getData: function() {
+            return $rootScope;
+        }
+	}
 }])
 
 .service('Ubicacion', function () {

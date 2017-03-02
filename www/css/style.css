@@ -1,5 +1,5 @@
 /* Empty. Add your own CSS if you like */
-#map{
+#map, #mapIncidents{
 	width: 100%;
   height: 500px;
   background-color: #000;
