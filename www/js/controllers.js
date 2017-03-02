@@ -26,21 +26,38 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('incidentesCtrl', function($scope, $stateParams, UserService, DataService) {
+.controller('incidentesCtrl', function($scope, $state,$stateParams, UserService, DataService) {
 	$scope.crimenes = [];
 
 	$scope.$on("$ionicView.enter", function (event, data) {
 	 	DataService.getCrimeList().then(function (res) {
-			console.log(res);
 			$scope.crimenes = res;
 		});
 	});
 
+  $scope.masDetaller = function(data){
+      console.log(data);
+      $state.go('menu.reportes');
+      $scope.poslat=data.lat;
+      $scope.poslng=data.lng;
+  };
+
+  var mapOptions = {
+      center: new google.maps.LatLng(4.624335, -74.063644),
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+  var poslat=4.624335;
+  var poslng=-74.063644;
+  $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+  $scope.ubicacion = new google.maps.LatLng(poslat, poslng);
+  var marker = new google.maps.Marker({position:$scope.ubicacion,  map: $scope.map});
+  $scope.map.setCenter($scope.ubicacion);
 })
 
 .controller('reportesCtrl', function($scope, $state, $stateParams, UserService, DataService) {
 
-  
+
 })
 
 .controller('camaraCtrl', function($scope, $stateParams) {
@@ -95,7 +112,21 @@ angular.module('starter.controllers', [])
         });
    };
 
-	$scope.registrar = function(){    
+	$scope.registrar = function(){
+	  console.log($scope.formData.infoPol, $scope.formData.infoBomb);
+	  var policia = $scope.formData.infoPol;
+	  var bomberos= $scope.formData.infoBomb;
+	  var descripcion = $scope.formData.descrip;
+	  if(policia == null){
+	    policia=false;
+	  }
+	  if(bomberos == null){
+    	    bomberos=false;
+    }
+    if(descripcion == null){
+      descripcion = "";
+    }
+    console.log(policia, bomberos);
 		var user = UserService.getUser();
 		if($scope.formData.tipo==null){
 		    console.log("sin informacion");
@@ -103,7 +134,7 @@ angular.module('starter.controllers', [])
 		}
 		else{
 			var ubicacion = Ubicacion.getUbicacion();
-		  	DataService.registerCrime(user.uid, $scope.formData.tipo, $scope.formData.descrip, $scope.formData.infoPol, $scope.formData.infoBomb, $scope.imageSrc, ubicacion.lat(), ubicacion.lng()).then(function (res) {
+		  	DataService.registerCrime(user.uid, $scope.formData.tipo, descripcion, policia, bomberos, $scope.imageSrc, ubicacion.lat(), ubicacion.lng()).then(function (res) {
       			$state.go('menu.inicio');
       			$scope.showAlert();
       		});
@@ -119,19 +150,39 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('loginCtrl', function($scope, $state, $stateParams, UserService) {
-
+.controller('loginCtrl', function($scope, $state, $stateParams, UserService,$ionicPopup, $timeout) {
 	$scope.loginData = {};
+   $scope.showLoginFail = function() {
+        var alertPopup = $ionicPopup.alert({
+          title: 'Ingrese correo y contraseña'
+        });
+        alertPopup.then(function(res) {
+          console.log('fail crimen');
+        });
+   };
+
+  $scope.showLoginFailError = function(data) {
+          var alertPopup = $ionicPopup.alert({
+            title: 'Error',
+            template: data
+          });
+          alertPopup.then(function(res) {
+            console.log('fail crimen');
+          });
+  };
 
 	$scope.doLogin = function() {
-		UserService.login($scope.loginData.username, $scope.loginData.password).then(function(){
-			//
-			console.log("Menu inicio");
-	        $state.go('menu.inicio');
-	      }
-	    ).catch(function(error){
-	      console.log(error);
-	    });
+
+	  if($scope.loginData.username == null || $scope.loginData.password == null){$scope.showLoginFail();}
+    else{
+      UserService.login($scope.loginData.username, $scope.loginData.password).then(function(){
+      				console.log("Menu inicio");
+              $state.go('menu.inicio');
+      }).catch(function(error){
+              $scope.showLoginFailError(error);
+      	      console.log(error);
+      });
+    }
 	}
 
 })
@@ -152,18 +203,42 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('registrarseCtrl', function($scope, $state, $stateParams, UserService) {
+.controller('registrarseCtrl', function($scope, $state, $stateParams, UserService,  $ionicPopup, $timeout) {
 
 	$scope.registerData = {};
   	$scope.user={};
 
+  $scope.showRegistroFail = function() {
+          var alertPopup = $ionicPopup.alert({
+            title: 'Ingrese correo y contraseña'
+          });
+          alertPopup.then(function(res) {
+            console.log(res);
+          });
+  };
+  $scope.showRegistroFailError = function(data) {
+            var alertPopup = $ionicPopup.alert({
+              title: 'Error',
+              template: data
+            });
+            alertPopup.then(function(res) {
+              console.log(res);
+            });
+  };
+
 	$scope.doRegister = function() {
-	  	UserService.registerUser($scope.registerData.username, $scope.registerData.password).then(function(){
-		    $scope.user.titulo=$scope.registerData.username;
-			$state.go('menu.inicio');
-		}).catch(function(error){
-			console.log(error);
-		});
+	    if($scope.registerData.username == null || $scope.registerData.password==null){
+	        $scope.showRegistroFail();
+	    }
+	    else{
+	        UserService.registerUser($scope.registerData.username, $scope.registerData.password).then(function(){
+          		  $scope.user.titulo=$scope.registerData.username;
+          			$state.go('menu.inicio');
+          }).catch(function(error){
+                $scope.showRegistroFailError(error);
+          			console.log(error);
+          });
+	    }
 	};
 })
 

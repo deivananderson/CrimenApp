@@ -2,11 +2,14 @@
   <ion-content padding="true" class="has-header">
     <h3 id="incidentes-heading14" style="color:#DA1414;font-weight:600;text-align:center;">Ultimos Incidentes</h3>
     <div id="incidentes-container12">
-      <ion-list>
-       <ion-item class="item-avatar positive" ng-repeat="crimen in crimenes">
+      <ion-list >
+       <ion-item class="item-avatar positive" ng-repeat="crimen in crimenes" ng-click="masDetaller(crimen)">
           <img ng-src="{{crimen.imageReport}}">
           <h2>{{crimen.name}}</h2>
           <p>{{crimen.description}}</p>
+         <ion-option-button class="button-positive" ng-click="masDetaller(crimen)">
+           ver mas
+         </ion-option-button>
         </ion-item>
       </ion-list>
     </div>

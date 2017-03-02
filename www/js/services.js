@@ -14,7 +14,7 @@ angular.module('starter.services', [])
 		getUbicacion: function(){
 			return ubicacion;
 		}
-	} 
+	}
 })
 
 .service('UserService', function ($firebaseAuth, $q) {
@@ -27,22 +27,22 @@ angular.module('starter.services', [])
 			auth.$createUserWithEmailAndPassword(username, password).then(function () {
 				$defer.resolve();
 			}).catch(function(error){
-				$defer.reject(error);   
+				$defer.reject(error);
 			});
 
 			return $defer.promise;
 		},
 		login: function (username, password) {
-			$defer = $q.defer();            
+			$defer = $q.defer();
 
 			auth.$signInWithEmailAndPassword(username, password).then(function () {
 				$defer.resolve();
 			}).catch(function(error){
-				$defer.reject(error);               
+				$defer.reject(error);
 			});
 
 			return $defer.promise;
-		}, 
+		},
 		getUser: function(){
 			return auth.$getAuth();
 		}
@@ -54,7 +54,7 @@ angular.module('starter.services', [])
 
 	return{
 		registerCrime: function (userId, crimeType, description, infoPolice, infoFirefighters, image, lat, lng) {
-			$defer = $q.defer();			
+			$defer = $q.defer();
 
 			firebaseRef.child('crimeList').push({
 				name: crimeType,
@@ -66,22 +66,26 @@ angular.module('starter.services', [])
 				lat: lat,
 				lng: lng
 			}).then(function (res) {
-				$defer.resolve(res);                
+				$defer.resolve(res);
 			}).catch(function(error){
-				$defer.reject(error);  
+				$defer.reject(error);
 			});
 
-			
+
 
 			return $defer.promise;
 		},
 		getCrimeList: function (userId) {
 			$defer = $q.defer();
 			$crimenes = [];
-			
-          	var crimeList = $firebaseArray(firebaseRef.child('crimeList'));
+
+      var crimeList = $firebaseArray(firebaseRef.child('crimeList'));
 			crimeList.$loaded().then(function (list) {
-				$defer.resolve(list);
+			  var list2 = [];
+			  for(var i = list.length-1;i>=0;i--){
+            list2.push(list[i]);
+			  }
+				$defer.resolve(list2);
 			}).catch(function (err) {
 				$defer.reject(err);
 			});
